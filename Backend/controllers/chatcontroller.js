@@ -1,3 +1,4 @@
+const {Op}=require('sequelize');
 const Message=require('../models/chat');
 exports.sendMessage=async(req,res,next)=>{
     try{
@@ -16,7 +17,12 @@ exports.sendMessage=async(req,res,next)=>{
 }
 exports.getMessage=async(req,res)=>{
     try{
-        const message=await Message.findAll()
+        const lastmsgid=req.query.lastmsgid;
+        const message=await Message.findAll({
+            where:{id:{
+                [Op.gt]:lastmsgid
+            }}
+        })
         res.status(200).json({message:message});
     }
     catch(e){

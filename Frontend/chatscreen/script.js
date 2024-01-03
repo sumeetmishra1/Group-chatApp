@@ -1,4 +1,3 @@
-
 const message=document.querySelector('#message-input');
 const chatbox=document.querySelector('#chat-messages');
 async function sendMessage(){
@@ -21,8 +20,22 @@ async function showmessage(details){
 window.addEventListener("DOMContentLoaded",getMessage())
 async function getMessage(){
     const token=localStorage.getItem('token');
-    const response=await axios.get('http://localhost:3000/chat/get-message',{headers:{'Authorization':token}})
+    const oldchat=JSON.parse(localStorage.getItem('message'))
+    let lastmsgid=-1;
+    if(oldchat){
+    for(var i=0;i<oldchat.length;i++){
+        showmessage(oldchat[i]);
+     }
+
+     if(oldchat.length>0){
+         lastmsgid=oldchat[oldchat.length-1].id
+     }
+    }
+   const response=await axios.get(`http://localhost:3000/chat/get-message?lastmsgid=${lastmsgid}`,{headers:{'Authorization':token}})
+    localStorage.setItem('message',JSON.stringify(response.data.message));
     for(var i=0;i<response.data.message.length;i++){
        showmessage(response.data.message[i]);
     }
+    
 }
+
