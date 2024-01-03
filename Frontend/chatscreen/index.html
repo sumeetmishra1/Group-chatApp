@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        h1{
+            text-align: center;
+        }
+       body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        #chat-container {
+            max-width: 400px;
+            height: 618px;
+            margin: 5px auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        #chat-messages {
+            padding: 10px;
+            height: 546px;
+            overflow-y: auto;
+            background-color: #fff;
+        }
+
+        #user-input {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #eee;
+        }
+
+        #message-input {
+            flex: 1;
+            padding: 5px;
+            margin-right: 10px;
+        }
+
+        #send-button {
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="heading">
+    <h1>Chat App</h1>
+</div>
+    <div id="chat-container">
+        <div id="chat-messages">
+        </div>
+        <div id="user-input">
+            <input type="text" id="message-input" placeholder="Type your message...">
+            <button id="send-button" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.0/axios.min.js"></script>
+</body>
+</html>

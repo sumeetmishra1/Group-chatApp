@@ -15,7 +15,7 @@ async function loginuser(e){
     alert("User Logged in!");
     console.log(obj)
     form.reset();
-    window.location.href="../creategroup/index.html"
+    window.location.href="../chatscreen/index.html"
 }
 catch(e){
     const childhtml=`<h3>${e.response.data.message}</h3>`;
