@@ -14,3 +14,12 @@ exports.sendMessage=async(req,res,next)=>{
     }
     
 }
+exports.getMessage=async(req,res)=>{
+    try{
+        const message=await Message.findAll()
+        res.status(200).json({message:message});
+    }
+    catch(e){
+        res.status(500).json({message:e.message});
+    }
+}
