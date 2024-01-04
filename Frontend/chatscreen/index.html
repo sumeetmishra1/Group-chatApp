@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        h1{
+        #heading{
             text-align: center;
         }
        body {
@@ -16,9 +16,8 @@
         }
 
         #chat-container {
-            max-width: 400px;
             height: 618px;
-            margin: 5px auto;
+            margin: 5px 50px;
             border: 1px solid #ccc;
             border-radius: 5px;
             overflow: hidden;
@@ -53,12 +52,39 @@
             border-radius: 3px;
             cursor: pointer;
         }
+        #groupbar{
+            size: 100px;
+            min-height: 618px;
+            width: 22%;
+            background-color: rgb(150, 156, 156);
+            float: left;
+        }
+        #creategroup{
+            font-size: large;
+            font-weight: bold;
+            background-color: rgb(234, 211, 255);
+            border-radius: 4px;
+        }
+        
     </style>
 </head>
 <body>
     <div id="heading">
     <h1>Chat App</h1>
 </div>
+    <div id="groupbar">
+        <div id="heading">
+            <h2>All Groups</h2>
+        </div>
+        <div id="allgroups">
+            <ul id="allgroups">
+
+            </ul>
+        </div>
+        <div id="heading">
+            <button id="creategroup" onclick="location.href='../creategroup/index.html'">Create Group</button>
+        </div>
+    </div>
     <div id="chat-container">
         <div id="chat-messages">
         </div>
