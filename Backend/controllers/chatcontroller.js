@@ -4,9 +4,12 @@ exports.sendMessage=async(req,res,next)=>{
     try{
         const name=req.user.name;
         const message=req.body.message;
+        const gpId=req.body.gpId;
         const response=await Message.create({
         name:name,
-        message:message
+        message:message,
+        userId:req.user.id,
+        groupId:gpId
         })
         res.status(200).json({message:response})
     }
@@ -18,10 +21,11 @@ exports.sendMessage=async(req,res,next)=>{
 exports.getMessage=async(req,res)=>{
     try{
         const lastmsgid=req.query.lastmsgid;
+        const gpId=req.query.gpId
         const message=await Message.findAll({
             where:{id:{
                 [Op.gt]:lastmsgid
-            }}
+            },groupId:gpId}
         })
         res.status(200).json({message:message});
     }

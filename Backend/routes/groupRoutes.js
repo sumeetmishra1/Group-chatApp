@@ -2,9 +2,9 @@ const express=require('express');
 const router=express.Router();
 const Auth=require('../middleware/authorization');
 const groupcontroller=require('../controllers/groupcontroller');
-router.post('/add-group',Auth.authenticate,groupcontroller.addgroup)
-
-
-
-
+router.post('/add-group',Auth.authenticate,groupcontroller.addgroup);
+router.get('/getgroup',Auth.authenticate,groupcontroller.getgroup);
+router.post('/addusertogroup',Auth.authenticate,groupcontroller.addUserToGroup);
+router.get('/groupuser',Auth.authenticate,groupcontroller.getUserOfGroup);
+router.delete('/removeuser',Auth.authenticate,groupcontroller.removeUserFromGroup);
 module.exports=router;

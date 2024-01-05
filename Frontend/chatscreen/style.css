@@ -1,0 +1,93 @@
+
+#heading{
+    text-align: center;
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+#chat-container {
+    height: 550px;
+    margin: 5px 50px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+#chat-messages {
+    padding: 10px;
+    height: 480px;
+    overflow-y: auto;
+    background-color: #fff;
+}
+
+#user-input {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #eee;
+}
+
+#message-input {
+    flex: 1;
+    padding: 5px;
+    margin-right: 10px;
+}
+
+#send-button {
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+#groupbar{
+    size: 100px;
+    min-height: 550px;
+    width: 22%;
+    background-color: rgb(150, 156, 156);
+    float: left;
+}
+#creategroup{
+    font-size: large;
+    font-weight: bold;
+    background-color: rgb(234, 211, 255);
+    border-radius: 4px;
+}
+#allgroups li,#groupuserlist{
+    list-style: none;   
+    margin-top: 4px;
+    
+}
+li button{
+    font-weight: bold;
+    font-size: medium;
+    font-family: cursive;
+    background-color: rgb(150, 156, 156);
+    border: none;
+    color: #83661d;
+}
+#adduserform{
+    display: flex;
+    flex-direction: column;
+    margin: 5px auto;
+    align-items: center;
+}
+#adduserform input{
+    min-width: 80%;
+    border: none;
+    border-radius: 4px;
+    height: 25px;
+    margin-bottom: 10px;
+}
+#adduserform button{
+    font-size: medium;
+    border-radius: 4px;
+    font-family: cursive;
+    margin-bottom:20px ;
+}

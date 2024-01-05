@@ -15,6 +15,8 @@ async function loginuser(e){
     alert("User Logged in!");
     console.log(obj)
     form.reset();
+    localStorage.setItem('groupname','Common Group')
+    localStorage.setItem('gpId',0)
     window.location.href="../chatscreen/index.html"
 }
 catch(e){

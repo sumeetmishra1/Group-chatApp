@@ -12,9 +12,11 @@ async function creategroup(e){
         console.log(response.data.group);
         alert(`${response.data.group} succesfully created`)
         form.reset();
+        location.href='/chatscreen/index.html'
     }
     catch(e){
         console.log(e.message);
+        alert(e.message);
     }
 
 }

@@ -4,83 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        #heading{
-            text-align: center;
-        }
-       body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-
-        #chat-container {
-            height: 618px;
-            margin: 5px 50px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            overflow: hidden;
-        }
-
-        #chat-messages {
-            padding: 10px;
-            height: 546px;
-            overflow-y: auto;
-            background-color: #fff;
-        }
-
-        #user-input {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px;
-            background-color: #eee;
-        }
-
-        #message-input {
-            flex: 1;
-            padding: 5px;
-            margin-right: 10px;
-        }
-
-        #send-button {
-            background-color: #4caf50;
-            color: #fff;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-        #groupbar{
-            size: 100px;
-            min-height: 618px;
-            width: 22%;
-            background-color: rgb(150, 156, 156);
-            float: left;
-        }
-        #creategroup{
-            font-size: large;
-            font-weight: bold;
-            background-color: rgb(234, 211, 255);
-            border-radius: 4px;
-        }
-        
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="heading">
     <h1>Chat App</h1>
+    <h2 id="groupname"></h2>
 </div>
     <div id="groupbar">
         <div id="heading">
             <h2>All Groups</h2>
         </div>
-        <div id="allgroups">
             <ul id="allgroups">
+                <li><button onclick="localStorage.setItem('groupname','Common Group');localStorage.setItem('gpId',0); location.reload()">Common Group</button></li>
+            </ul>
+        <div id="adduserform">
+            <label for="adduser"></label>
+            <input type="text" name="adduser" id="adduser">
+            <button id="addusertogroup" onclick="addusertogroup()">Add User</button>
+        </div>
+        <div id="groupusers">
+            <div id="heading">
+            <h2>Group Members</h2>
+        </div>
+            <ul id="groupuserlist">
 
             </ul>
-        </div>
+        </div>    
         <div id="heading">
             <button id="creategroup" onclick="location.href='../creategroup/index.html'">Create Group</button>
         </div>
