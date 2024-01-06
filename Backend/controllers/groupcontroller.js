@@ -41,18 +41,25 @@ exports.addUserToGroup=async(req,res)=>{
    try{
       const groupname=req.body.groupname;
       const name=req.body.name;
-      const existinggroup=await Group.findOne({where:{groupname:groupname}});
-      const existinguser=await User.findOne({where:{name:name}});
-      if(!existinguser){
-         return res.status(404).json({message:"User doesn't exists!"});
+      const admin=await Usergroup.findOne({where:{userId:req.user.id,groupname:groupname}});
+      if(admin.isAdmin){
+         const existinggroup=await Group.findOne({where:{groupname:groupname}});
+         const existinguser=await User.findOne({where:{name:name}});
+         if(!existinguser){
+            return res.status(404).json({message:"User doesn't exists!"});
+         }
+         const usergroup=await Usergroup.create({
+            groupname:groupname,
+            name:name,
+            userId:existinguser.id,
+            groupId:existinggroup.id,
+            isAdmin:false
+         })
+         res.status(200).json({user:usergroup});
       }
-      const usergroup=await Usergroup.create({
-         groupname:groupname,
-         name:name,
-         userId:existinguser.id,
-         groupId:existinggroup.id
-      })
-      res.status(200).json({user:usergroup});
+      else{
+         res.status(401).json({message:"You are not Admin"});
+      }
    }
    catch(e){
       res.status(400).json({e});
@@ -89,4 +96,22 @@ exports.removeUserFromGroup=async(req,res)=>{
   catch(e){
    res.status(400).json({e})
   }
+}
+exports.makeUserAdmin=async(req,res)=>{
+   const gpId=req.body.gpId;
+   const userId=req.body.id;
+   const admin=await Usergroup.findOne({where:{userId:req.user.id,groupId:gpId}});
+   if(admin.isAdmin){
+      const user=await Usergroup.findOne({where:{userId:userId,groupId:gpId}});
+      if(user.isAdmin){
+         return res.status(401).json({message:"User is already admin!"});
+      }
+      else{
+      user.update({isAdmin:true});
+      res.status(200).json({user});
+      }
+   }
+   else{
+      return res.status(401).json({message:"You are not admin!"});
+   }
 }

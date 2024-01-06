@@ -7,4 +7,5 @@ router.get('/getgroup',Auth.authenticate,groupcontroller.getgroup);
 router.post('/addusertogroup',Auth.authenticate,groupcontroller.addUserToGroup);
 router.get('/groupuser',Auth.authenticate,groupcontroller.getUserOfGroup);
 router.delete('/removeuser',Auth.authenticate,groupcontroller.removeUserFromGroup);
+router.post('/makeuseradmin',Auth.authenticate,groupcontroller.makeUserAdmin);
 module.exports=router;

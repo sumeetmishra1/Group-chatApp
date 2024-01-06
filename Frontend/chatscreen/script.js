@@ -103,3 +103,20 @@ async function removeuser(id){
     alert(e.response.data.message)
    }
 }
+async function makeadmin(id){
+    try{
+        const token=localStorage.getItem('token');
+        const gpId=localStorage.getItem('gpId');
+        let obj={
+            id:id,
+            gpId:gpId
+        }
+       const response= await axios.post(`http://localhost:3000/group/makeuseradmin`,obj,{headers:{'Authorization':token}})
+       console.log(response);
+       alert(`${response.data.user.name} is now Admin`)
+    }
+    catch(e){
+        console.log(e.message)
+    alert(e.response.data.message)
+    }
+}
