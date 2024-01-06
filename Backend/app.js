@@ -12,10 +12,12 @@ const userroutes=require('./routes/userRoutes');
 const grouproutes=require('./routes/groupRoutes')
 const chatroutes=require('./routes/chatRoutes');
 const sequelize=require('./utils/database')
+
 app.use(cors());
 app.use(bodyparser.json({extended:false}));
 app.use('/chat',chatroutes);
 app.use('/group',grouproutes)
+
 app.use('/user',userroutes)
 
 app.use((req,res)=>{
@@ -38,4 +40,5 @@ Message.belongsTo(Group);
 
 sequelize.sync().then(res=>{
     app.listen(3000);
+    console.log("app runs")
 }).catch(err=>console.log(err));
