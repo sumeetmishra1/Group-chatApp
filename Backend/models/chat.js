@@ -8,6 +8,7 @@ const Message=sequelize.define('message',{
         primaryKey:true
     },
     name:Sequelize.STRING,
-    message:Sequelize.STRING
+    message:Sequelize.STRING,
+    fileUrl:Sequelize.STRING
 })
 module.exports=Message

@@ -49,7 +49,7 @@ io.on('connection',(socket)=>{
     console.log(socket.id)
     socket.on('user-message',(details,room)=>{
         console.log(room)
-        socket.broadcast.emit('recieve-message',details,room);
+        socket.broadcast.emit(`recieve-message${details.groupId}`,details,room);
     })
     socket.on('join-room',(room)=>{
         socket.join(room)

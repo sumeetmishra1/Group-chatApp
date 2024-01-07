@@ -3,9 +3,8 @@ const chatbox=document.querySelector('#chat-messages');
 const groupname=document.querySelector('#groupname');
 groupname.innerHTML=localStorage.getItem('groupname')
 const socket = io();
-socket.on('recieve-message',(details)=>{
-    const gpId=localStorage.getItem('gpId')
-    if(details.groupId===gpId)
+const gpId=localStorage.getItem('gpId')
+socket.on(`recieve-message${gpId}`,(details)=>{
     showmessage(details)
 })
 async function sendMessage(){
