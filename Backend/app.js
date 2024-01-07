@@ -1,5 +1,6 @@
 const express=require('express');
 const path = require('path');
+const http=require('http');//for socket
 const cors=require('cors');
 require('dotenv').config();
 const bodyparser=require('body-parser');
@@ -12,6 +13,11 @@ const userroutes=require('./routes/userRoutes');
 const grouproutes=require('./routes/groupRoutes')
 const chatroutes=require('./routes/chatRoutes');
 const sequelize=require('./utils/database')
+const server=http.createServer(app);
+const { Server } = require("socket.io");
+const io=new Server(server,{
+
+});
 
 app.use(cors());
 app.use(bodyparser.json({extended:false}));
@@ -38,7 +44,19 @@ Group.belongsToMany(User,{through:usergroup});
 Group.hasMany(Message);
 Message.belongsTo(Group);
 
+//socket
+io.on('connection',(socket)=>{
+    console.log(socket.id)
+    socket.on('user-message',(details,room)=>{
+        console.log(room)
+        socket.broadcast.emit('recieve-message',details,room);
+    })
+    socket.on('join-room',(room)=>{
+        socket.join(room)
+    })
+})
+
 sequelize.sync().then(res=>{
-    app.listen(3000);
-    console.log("app runs")
-}).catch(err=>console.log(err));
+    server.listen(3000);
+}).catch(err=>console.log(err))
+

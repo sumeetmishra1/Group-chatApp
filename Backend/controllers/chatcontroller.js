@@ -20,12 +20,9 @@ exports.sendMessage=async(req,res,next)=>{
 }
 exports.getMessage=async(req,res)=>{
     try{
-        const lastmsgid=req.query.lastmsgid;
         const gpId=req.query.gpId
         const message=await Message.findAll({
-            where:{id:{
-                [Op.gt]:lastmsgid
-            },groupId:gpId}
+            where:{groupId:gpId}
         })
         res.status(200).json({message:message});
     }
