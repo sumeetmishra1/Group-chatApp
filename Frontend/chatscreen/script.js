@@ -2,16 +2,25 @@ const message=document.querySelector('#message-input');
 const chatbox=document.querySelector('#chat-messages');
 const groupname=document.querySelector('#groupname');
 groupname.innerHTML=localStorage.getItem('groupname')
+const socket = io();
+socket.on('recieve-message',(details)=>{
+    const gpId=localStorage.getItem('gpId')
+    if(details.groupId===gpId)
+    showmessage(details)
+})
 async function sendMessage(){
     let obj={
         message:message.value,
         gpId:localStorage.getItem('gpId')
     }
+    const gpname=localStorage.getItem('groupname')
     const token=localStorage.getItem('token');
     const response=await axios.post('http://localhost:3000/chat/send-message',obj,{headers:{'Authorization':token}})
     const details=response.data.message
     console.log(details.message);
     showmessage(details);
+    
+    socket.emit('user-message',details,gpname);
     message.value="";
 }
 async function showmessage(details){
@@ -23,20 +32,8 @@ async function showmessage(details){
 window.addEventListener("DOMContentLoaded",getMessage(),getgroup(),groupuserlist())
 async function getMessage(){
     const token=localStorage.getItem('token');
-    const oldchat=JSON.parse(localStorage.getItem('message'));
     const gpId=localStorage.getItem('gpId');
-    let lastmsgid=-1;
-    if(oldchat){
-    for(var i=0;i<oldchat.length;i++){
-        showmessage(oldchat[i]);
-     }
-
-     if(oldchat.length>0){
-         lastmsgid=oldchat[oldchat.length-1].id
-     }
-    }
-   const response=await axios.get(`http://localhost:3000/chat/get-message?lastmsgid=${lastmsgid}&gpId=${gpId}`,{headers:{'Authorization':token}})
-    localStorage.setItem('message',JSON.stringify(response.data.message));
+   const response=await axios.get(`http://localhost:3000/chat/get-message?gpId=${gpId}`,{headers:{'Authorization':token}})
     for(var i=0;i<response.data.message.length;i++){
        showmessage(response.data.message[i]);
     }
@@ -49,8 +46,14 @@ async function getgroup(){
     for(var i=0;i<response.data.groups.length;i++){
         const gpname=response.data.groups[i].groupname
         const gpId=response.data.groups[i].groupId
-        grouplist.innerHTML+=`<li><button id="${gpId}" onclick="localStorage.setItem('groupname','${gpname}');localStorage.setItem('gpId','${gpId}');location.reload()">${gpname}</button></li>`
+        grouplist.innerHTML+=`<li><button id="${gpId}" onclick="intogroup('${gpname}',${gpId})">${gpname}</button></li>`
     }
+}
+function intogroup(gpname,gpId){
+    localStorage.setItem('groupname',gpname);
+    localStorage.setItem('gpId',gpId);
+    location.reload();
+    socket.emit('join-room', gpname)
 }
 async function addusertogroup(){
     try{
@@ -120,3 +123,4 @@ async function makeadmin(id){
     alert(e.response.data.message)
     }
 }
+
