@@ -38,10 +38,11 @@ body {
     margin-right: 10px;
 }
 
-#send-button {
+#send-button,#file-button,#multimedia-option {
     background-color: #4caf50;
     color: #fff;
     border: none;
+    margin-right: 3px;
     padding: 8px 15px;
     border-radius: 3px;
     cursor: pointer;
@@ -90,4 +91,9 @@ li button{
     border-radius: 4px;
     font-family: cursive;
     margin-bottom:20px ;
+}
+.chat-image{
+    height: 10rem;
+    width: 14rem;
+    object-fit: cover;
 }

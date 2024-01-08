@@ -9,6 +9,9 @@ const Message=sequelize.define('message',{
     },
     name:Sequelize.STRING,
     message:Sequelize.STRING,
-    fileUrl:Sequelize.STRING
+    isImage:{
+       type: Sequelize.BOOLEAN,
+       defaultValue:false
+    }
 })
 module.exports=Message

@@ -40,7 +40,15 @@
         </div>
         <div id="user-input">
             <input type="text" id="message-input" placeholder="Type your message...">
+             <div id="hidden-multimedia" hidden>
+                <input type="file" id="multimedia-input" accept="image/*" >
+            <button id="file-button" onclick="uploadFile()">Upload</button>
+            </div>
+            <button id="multimedia-option" onclick="showmultimediaoption()">+</button>
             <button id="send-button" onclick="sendMessage()">Send</button>
+        </div>
+        <div id="mutimedia">
+            
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.0/axios.min.js"></script>
