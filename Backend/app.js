@@ -15,10 +15,9 @@ const chatroutes=require('./routes/chatRoutes');
 const sequelize=require('./utils/database')
 const server=http.createServer(app);
 const { Server } = require("socket.io");
-const io=new Server(server,{
-
-});
-
+const io=new Server(server);
+const cornservice=require('./Services/cronjobs');
+cornservice.job.start();
 app.use(cors());
 app.use(bodyparser.json({extended:false}));
 app.use('/chat',chatroutes);
