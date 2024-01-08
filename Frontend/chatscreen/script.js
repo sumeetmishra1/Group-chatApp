@@ -3,9 +3,8 @@ const chatbox=document.querySelector('#chat-messages');
 const groupname=document.querySelector('#groupname');
 groupname.innerHTML=localStorage.getItem('groupname')
 const socket = io();
-socket.on('recieve-message',(details)=>{
-    const gpId=localStorage.getItem('gpId')
-    if(details.groupId===gpId)
+const gpId=localStorage.getItem('gpId')
+socket.on(`recieve-message${gpId}`,(details)=>{
     showmessage(details)
 })
 async function sendMessage(){
@@ -20,14 +19,21 @@ async function sendMessage(){
     console.log(details.message);
     showmessage(details);
     
-    socket.emit('user-message',details,gpname);
+    socket.emit('user-message',details);
     message.value="";
 }
 async function showmessage(details){
     const name=details.name;
     const message=details.message;
+    if(details.isImage){
+    const childHTML=`${details.name}:<img src="${details.message}" class="chat-image">`
+    chatbox.innerHTML+=childHTML;
+    }
+    else{
     const childHTML=`<p>${name}:${message}</p>`
     chatbox.innerHTML+=childHTML;
+    }
+    
 }
 window.addEventListener("DOMContentLoaded",getMessage(),getgroup(),groupuserlist())
 async function getMessage(){
@@ -123,4 +129,29 @@ async function makeadmin(id){
     alert(e.response.data.message)
     }
 }
-
+function showmultimediaoption(){
+    const showmultimediaoption=document.querySelector('#hidden-multimedia')
+    document.querySelector('#multimedia-option').innerHTML='&#215;'
+    if(showmultimediaoption.style.display==='flex'){
+        showmultimediaoption.style.display='none';
+        document.querySelector('#multimedia-option').innerHTML='+'
+    }
+    else{
+    showmultimediaoption.style.display='flex'
+    }
+}
+async function uploadFile(){
+    const multimediainput=document.querySelector('#multimedia-input');
+    const multimediadata=multimediainput.files[0];
+    const formData = new FormData();
+    const gpId=localStorage.getItem('gpId');
+    formData.append('groupId',gpId)
+    formData.append('image',multimediadata);
+    const token=localStorage.getItem('token');
+    const response=await axios.post(`http://localhost:3000/chat/uploadFile`,formData,{headers:{'Authorization':token}})
+    const details=response.data.message
+    multimediainput.value="";
+    showmultimediaoption();
+    showmessage(details)
+    socket.emit('user-message',details);
+}

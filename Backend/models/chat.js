@@ -8,6 +8,10 @@ const Message=sequelize.define('message',{
         primaryKey:true
     },
     name:Sequelize.STRING,
-    message:Sequelize.STRING
+    message:Sequelize.STRING,
+    isImage:{
+       type: Sequelize.BOOLEAN,
+       defaultValue:false
+    }
 })
 module.exports=Message

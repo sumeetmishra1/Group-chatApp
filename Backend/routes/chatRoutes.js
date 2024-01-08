@@ -1,7 +1,10 @@
 const express=require('express');
 const router=express.Router();
 const Auth=require('../middleware/authorization');
+const Multer=require('../middleware/multer');
+const upload=Multer.multer.single('image');
 const chatcontroller=require('../controllers/chatcontroller');
 router.post('/send-message',Auth.authenticate,chatcontroller.sendMessage);
 router.get('/get-message',Auth.authenticate,chatcontroller.getMessage);
+router.post('/uploadFile',Auth.authenticate,upload,chatcontroller.uploadfile);
 module.exports=router;
