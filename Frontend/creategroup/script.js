@@ -8,7 +8,7 @@ async function creategroup(e){
             groupname:groupname.value
         }
         const token=localStorage.getItem('token');
-        const response=await axios.post('http://localhost:3000/group/add-group',obj,{headers:{'Authorization':token}})
+        const response=await axios.post('http://51.20.42.201:3000/group/add-group',obj,{headers:{'Authorization':token}})
         console.log(response.data.group);
         alert(`${response.data.group} succesfully created`)
         form.reset();
