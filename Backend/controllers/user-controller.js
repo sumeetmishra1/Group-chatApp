@@ -1,4 +1,4 @@
-const User=require('../models/newuser');
+const User=require('../models/user');
 const bcrypt=require('bcrypt')
 const jwt=require('jsonwebtoken')
 function createToken(id,name){

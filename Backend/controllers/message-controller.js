@@ -1,6 +1,6 @@
 const {Op}=require('sequelize');
-const Message=require('../models/chat');
-const S3services=require('../Services/s3services');
+const Message=require('../models/message');
+const S3services=require('../services/S3-services');
 exports.sendMessage=async(req,res,next)=>{
     try{
         const name=req.user.name;
@@ -25,7 +25,7 @@ exports.uploadfile=async(req,res)=>{
     const userid=req.user.id;
     const name=req.user.name;
     const gpId=req.body.groupId;
-    const filename=`Image${userid}/${new Date()}`
+    const filename=`Image${gpId}/${new Date()}`
     const fileurl=await S3services.uploadToS3(file.buffer,filename);
     const response=await Message.create({
         name:name,

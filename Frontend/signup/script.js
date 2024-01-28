@@ -14,7 +14,7 @@ async function addnewuser(e){
             email:email.value,
             password:password.value
         }
-        const user=await axios.post('http://51.20.42.201:3000/user/addnewuser',obj)
+        const user=await axios.post('http://16.171.137.154/user/add-user',obj)
         console.log(user)
         form.reset();
         window.alert("User Creted Succesfully!")

@@ -1,7 +1,7 @@
 const cron=require('node-cron');
 const {Op} = require('sequelize');
-const Message=require('../models/chat');
-const Archivechat=require('../models/archivedchats');
+const Message=require('../models/message');
+const Archivechat=require('../models/archived-message');
 exports.job=cron.schedule('0 1 * * *',async () => {
     try{
         const oneDayAgoDate=new Date();

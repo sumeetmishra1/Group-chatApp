@@ -2,6 +2,7 @@ const message=document.querySelector('#message-input');
 const chatbox=document.querySelector('#chat-messages');
 const groupname=document.querySelector('#groupname');
 groupname.innerHTML=localStorage.getItem('groupname')
+
 const socket = io();
 const gpId=localStorage.getItem('gpId')
 socket.on(`recieve-message${gpId}`,(details)=>{
@@ -14,7 +15,7 @@ async function sendMessage(){
     }
     const gpname=localStorage.getItem('groupname')
     const token=localStorage.getItem('token');
-    const response=await axios.post('http://51.20.42.201:3000/chat/send-message',obj,{headers:{'Authorization':token}})
+    const response=await axios.post('http://16.171.137.154/chat/send-message',obj,{headers:{'Authorization':token}})
     const details=response.data.message
     console.log(details.message);
     showmessage(details);
@@ -39,7 +40,7 @@ window.addEventListener("DOMContentLoaded",getMessage(),getgroup(),groupuserlist
 async function getMessage(){
     const token=localStorage.getItem('token');
     const gpId=localStorage.getItem('gpId');
-   const response=await axios.get(`http://51.20.42.201:3000/chat/get-message?gpId=${gpId}`,{headers:{'Authorization':token}})
+   const response=await axios.get(`http://16.171.137.154/chat/get-message?gpId=${gpId}`,{headers:{'Authorization':token}})
     for(var i=0;i<response.data.message.length;i++){
        showmessage(response.data.message[i]);
     }
@@ -48,7 +49,7 @@ async function getMessage(){
 async function getgroup(){
     const token=localStorage.getItem('token');
     const grouplist=document.querySelector('#allgroups');
-    const response=await axios.get(`http://51.20.42.201:3000/group/getgroup`,{headers:{'Authorization':token}})
+    const response=await axios.get(`http://16.171.137.154/group/get-group`,{headers:{'Authorization':token}})
     for(var i=0;i<response.data.groups.length;i++){
         const gpname=response.data.groups[i].groupname
         const gpId=response.data.groups[i].groupId
@@ -69,7 +70,7 @@ async function addusertogroup(){
         name:username.value,
         groupname:localStorage.getItem('groupname')
     }
-    const user=await axios.post(`http://51.20.42.201:3000/group/addusertogroup`,obj,{headers:{'Authorization':token}})
+    const user=await axios.post(`http://16.171.137.154/group/add-user-to-group`,obj,{headers:{'Authorization':token}})
     console.log(user.data.user)
     alert('User Added To Group')
     username.value="";
@@ -84,7 +85,7 @@ async function groupuserlist(){
     const token=localStorage.getItem('token');
     const gpId=localStorage.getItem('gpId');
     const userlist=document.querySelector('#groupuserlist');
-    const response=await axios.get(`http://51.20.42.201:3000/group/groupuser?gpId=${gpId}`,{headers:{'Authorization':token}})
+    const response=await axios.get(`http://16.171.137.154/group/group-user?gpId=${gpId}`,{headers:{'Authorization':token}})
     for(var i=0;i<response.data.users.length;i++){
         const username=response.data.users[i].name
         const Id=response.data.users[i].userId
@@ -103,7 +104,7 @@ async function removeuser(id){
     try{
         const token=localStorage.getItem('token');
         const gpId=localStorage.getItem('gpId');
-       const response= await axios.delete(`http://51.20.42.201:3000/group/removeuser?gpId=${gpId}&userId=${id}`,{headers:{'Authorization':token}})
+       const response= await axios.delete(`http://16.171.137.154/group/remove-user?gpId=${gpId}&userId=${id}`,{headers:{'Authorization':token}})
        console.log(response);
        alert("User Removed From Group")
     }
@@ -120,7 +121,7 @@ async function makeadmin(id){
             id:id,
             gpId:gpId
         }
-       const response= await axios.post(`http://51.20.42.201:3000/group/makeuseradmin`,obj,{headers:{'Authorization':token}})
+       const response= await axios.post(`http://16.171.137.154/group/make-user-admin`,obj,{headers:{'Authorization':token}})
        console.log(response);
        alert(`${response.data.user.name} is now Admin`)
     }
@@ -148,9 +149,8 @@ async function uploadFile(){
     formData.append('groupId',gpId)
     formData.append('image',multimediadata);
     const token=localStorage.getItem('token');
-    const response=await axios.post(`http://51.20.42.201:3000/chat/uploadFile`,formData,{headers:{'Authorization':token}})
+    const response=await axios.post(`http://16.171.137.154/chat/upload-file`,formData,{headers:{'Authorization':token}})
     const details=response.data.message
-    multimediainput.value="";
     showmultimediaoption();
     showmessage(details)
     socket.emit('user-message',details);
